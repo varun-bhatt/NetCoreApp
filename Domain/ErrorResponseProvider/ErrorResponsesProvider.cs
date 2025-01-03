@@ -48,6 +48,9 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
 
         public static readonly ErrorResponsesProvider InvalidSortOrder = new("invalid_sort_order", "Sort order invalid",
             "invalid_sort_order", HttpStatusCode.BadRequest);
+        
+        public static readonly ErrorResponsesProvider InvalidUserId = new("invalid_user_id", "User Id invalid",
+            "invalid_user_id", HttpStatusCode.BadRequest);
 
         public string Message { get; set; }
         public string Code { get; set; }
