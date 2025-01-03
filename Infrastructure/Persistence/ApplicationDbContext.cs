@@ -10,29 +10,56 @@ namespace NetCoreApp.Infrastructure.Persistence
         {
         }
 
-        public DbSet<Person> Persons { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
+
+        public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
+        public virtual DbSet<ExpenseStatus> ExpenseStatuses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
-            builder.Entity<Person>(entity =>
+            builder.Entity<Expense>(entity =>
             {
-                entity.HasNoKey();
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.Description)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Address)
-                    .HasMaxLength(255)
+                entity.HasOne(d => d.ExpenseCategory).WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.ExpenseCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Expenses_Category");
+
+                entity.HasOne(d => d.Status).WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.StatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Expenses_Status");
+            });
+
+            builder.Entity<ExpenseCategory>(entity =>
+            {
+                entity.ToTable("ExpenseCategory");
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
-                entity.Property(e => e.City)
-                    .HasMaxLength(255)
+            });
+
+            builder.Entity<ExpenseStatus>(entity =>
+            {
+                entity.ToTable("ExpenseStatus");
+
+                entity.HasIndex(e => e.Name, "UK_Status").IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Name)
+                    .HasMaxLength(20)
                     .IsUnicode(false);
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-                entity.Property(e => e.PersonId).HasColumnName("PersonID");
             });
 
             base.OnModelCreating(builder);

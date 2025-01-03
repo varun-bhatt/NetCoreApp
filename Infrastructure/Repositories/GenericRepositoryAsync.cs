@@ -14,33 +14,33 @@ namespace NetCoreApp.Infrastructure.Repositories
             _dbContext = dbContext;
         }
 
-        public  async Task<Person> GetByIdAsync(int id)
+        public  async Task<Expense> GetByIdAsync(int id)
         {
-            return await _dbContext.Persons.FirstOrDefaultAsync(x =>x.PersonId == id);
+            return await _dbContext.Expenses.FirstOrDefaultAsync(x =>x.Id == id);
         }
-        public async Task<Person> AddAsync(Person entity)
+        public async Task<Expense> AddAsync(Expense entity)
         {
-            await _dbContext.Set<Person>().AddAsync(entity);
+            await _dbContext.Set<Expense>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
         }
 
-        public async Task UpdateAsync(Person entity)
+        public async Task UpdateAsync(Expense entity)
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Person entity)
+        public async Task DeleteAsync(Expense entity)
         {
-            _dbContext.Set<Person>().Remove(entity);
+            _dbContext.Set<Expense>().Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<Person>> GetAllAsync()
+        public async Task<IReadOnlyList<Expense>> GetAllAsync()
         {
             return await _dbContext
-                .Set<Person>()
+                .Set<Expense>()
                 .ToListAsync();
         }
     }
