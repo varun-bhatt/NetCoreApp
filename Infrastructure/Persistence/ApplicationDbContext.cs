@@ -19,7 +19,7 @@ namespace NetCoreApp.Infrastructure.Persistence
         {
             builder.Entity<Expense>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
                 entity.Property(e => e.Amount).HasColumnType("decimal(18, 2)");
                 entity.Property(e => e.Description)
                     .HasMaxLength(250)
@@ -53,7 +53,7 @@ namespace NetCoreApp.Infrastructure.Persistence
             {
                 entity.HasIndex(e => e.Name, "UK_UserName").IsUnique();
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(250)
