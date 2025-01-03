@@ -27,12 +27,11 @@ namespace NetCoreApp.Infrastructure.Repositories
                 ).Take(500).ToListAsync();
             }
 
-            var result = await _dbContext.Expenses.Include(x => x.ExpenseCategory).Include(x => x.Status).Where(e =>
+            var result = await _dbContext.Expenses.Include(x => x.ExpenseCategory).Where(e =>
                 e.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
                 e.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
                 (e.ExpenseCategory != null && e.ExpenseCategory.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
                 e.Id.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                ( e.Status != null && e.Status.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
                 e.CreatedAt.ToString().Contains(searchText)
             ).Take(500).ToListAsync();
 
