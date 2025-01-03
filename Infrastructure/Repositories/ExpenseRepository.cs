@@ -30,11 +30,10 @@ namespace NetCoreApp.Infrastructure.Repositories
             }
 
             var result = await _dbContext.Expenses.Include(x => x.ExpenseCategory).Where(e =>
-                e.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                e.Description.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                (e.ExpenseCategory != null &&
-                 e.ExpenseCategory.Name.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                e.Id.ToString().Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                e.Name.ToLower().Contains(searchText.ToLower()) ||
+                e.Description.ToLower().Contains(searchText.ToLower()) ||
+                e.ExpenseCategory != null && e.ExpenseCategory.Name.ToLower().Contains(searchText.ToLower()) ||
+                e.Id.ToString().Contains(searchText) ||
                 e.CreatedAt.ToString().Contains(searchText)
             ).Take(500).ToListAsync();
 
