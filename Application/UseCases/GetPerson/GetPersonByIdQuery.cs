@@ -3,7 +3,7 @@ using NetCoreApp.Domain.Entities;
 
 namespace NetCoreApp.Application.UseCases.GetPerson
 {
-    public class GetPersonByIdQuery : IRequest<Expense>
+    public class GetPersonByIdQuery : IRequest<Domain.Entities.Expense>
     {
         public int Id { get; set; }
 

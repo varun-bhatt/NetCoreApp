@@ -4,7 +4,7 @@ using NetCoreApp.Domain.Entities;
 
 namespace NetCoreApp.Application.UseCases.GetPerson
 {
-    public class GetPersonByIdHandler : IRequestHandler<GetPersonByIdQuery, Expense>
+    public class GetPersonByIdHandler : IRequestHandler<GetPersonByIdQuery, Domain.Entities.Expense>
     {
         private readonly IExpenseRepository _repository;
 
@@ -13,7 +13,7 @@ namespace NetCoreApp.Application.UseCases.GetPerson
             _repository = repository;
         }
 
-        public async Task<Expense> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
+        public async Task<Domain.Entities.Expense> Handle(GetPersonByIdQuery request, CancellationToken cancellationToken)
         {
             return await _repository.GetByIdAsync(request.Id);
         }

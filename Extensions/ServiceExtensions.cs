@@ -2,6 +2,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;
+using AutoMapper;
 using Peddle.MessageBroker.Serializer;
 using Microsoft.EntityFrameworkCore;
 using NetCoreApp;
@@ -37,6 +38,7 @@ namespace NetCoreApplication.Extensions
 
             //Register healthchecks
             services.RegisterHealthChecks(configuration);
+            services.AddAutoMapperService();
         }
 
         private static void RegisterRepositories(this IServiceCollection services)
@@ -61,6 +63,14 @@ namespace NetCoreApplication.Extensions
            
             services.AddHealthChecks()
                 .AddSqlServer(dbConnectionString, tags: new[] { readiness });
+        }
+        
+        public static void AddAutoMapperService(this IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc => { mc.AddMaps(Assembly.GetExecutingAssembly()); });
+            var mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
         }
     }
 }
