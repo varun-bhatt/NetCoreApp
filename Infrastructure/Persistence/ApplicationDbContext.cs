@@ -13,6 +13,8 @@ namespace NetCoreApp.Infrastructure.Persistence
         public virtual DbSet<Expense> Expenses { get; set; }
 
         public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<Expense>(entity =>
