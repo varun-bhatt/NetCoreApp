@@ -14,6 +14,9 @@ namespace NetCoreApp.Application.UseCases.ListAllExpenses
 
             RuleFor(x => x.GetExpensesRequest).NotNull()
                 .WithErrorCode(ErrorResponsesProvider.UnhandledException.Code);
+            
+            RuleFor(x => x.GetExpensesRequest.UserId).NotNull()
+                .WithErrorCode(ErrorResponsesProvider.InvalidUserId.Code);
 
             RuleFor(x => x.GetExpensesRequest.StartDate)
                 .LessThanOrEqualTo(x => x.GetExpensesRequest.EndDate)

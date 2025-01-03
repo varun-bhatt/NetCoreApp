@@ -39,7 +39,7 @@ public class ExpensesController : PeddleApiControllerBase
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [HttpGet(Name = CommonConstants.ListAllExpensesRouteName)]
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetExpensesRequestDto request)
         {
             var getExpensesQuery = new GetExpensesQuery { GetExpensesRequest = request };
@@ -47,15 +47,14 @@ public class ExpensesController : PeddleApiControllerBase
             Result<IEnumerable<ExpandoObject>, Exception> expenses = await QueryAsync(getExpensesQuery);
             if (!(expenses.IsSuccess && expenses.SuccessValue.Any())) throw expenses.FailureValue;
 
-            IDictionary<string, object> paginationData = expenses.SuccessValue?.Last();
+           // IDictionary<string, object> paginationData = expenses.SuccessValue?.Last();
 
-            Response.Headers.Append("Pagination", JsonConvert.SerializeObject(paginationData["Pagination"],
-                new JsonSerializerSettings { ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() } }));
+            // Response.Headers.Append("Pagination", JsonConvert.SerializeObject(paginationData["Pagination"],
+            //     new JsonSerializerSettings { ContractResolver = new DefaultContractResolver { NamingStrategy = new SnakeCaseNamingStrategy() } }));
 
             var result = new
             {
-                expenses = expenses.SuccessValue.SkipLast(1),
-                links = GetPaginationLinks(paginationData, request)
+                expenses = expenses.SuccessValue.SkipLast(1)
             };
             return Ok(result);
         }
@@ -99,7 +98,7 @@ public class ExpensesController : PeddleApiControllerBase
                 );
             return new LinkDto(
                 Url.Link(CommonConstants.ListAllExpensesRouteName, queriesDictionary)
-                    ?.Replace("DownStreamUrl", "APIGatewayURl"),
+                    ?.Replace("", ""),
                 page, "GET");
         }
 }
