@@ -5,7 +5,7 @@ using Peddle.Foundation.Common.Dtos;
 
 namespace NetCoreApp.Application.UseCases.Expense.SearchExpense;
 
-public class SearchExpenseEventHandler : IRequestHandler<SearchExpenseQuery, Result<IEnumerable<Domain.Entities.Expense>, Exception>>
+public class SearchExpenseEventHandler : IRequestHandler<SearchExpenseQuery, Result<List<SearchExpenseResponse>, Exception>>
 {
     private readonly ILogger<SearchExpenseEventHandler> _logger;
     private readonly IExpenseRepository _expenseRepository;
@@ -21,18 +21,35 @@ public class SearchExpenseEventHandler : IRequestHandler<SearchExpenseQuery, Res
         _mapper = mapper;
     }
 
-    public async Task<Result<IEnumerable<Domain.Entities.Expense>, Exception>> Handle(SearchExpenseQuery request, CancellationToken cancellationToken)
+    public async Task<Result<List<SearchExpenseResponse>, Exception>> Handle(SearchExpenseQuery request, CancellationToken cancellationToken)
     {
         try
         {
             var expenses = await _expenseRepository.SearchExpensesAsync(request.SearchText);
-            var response = _mapper.Map<IEnumerable<Domain.Entities.Expense>>(expenses);
-            return Result<IEnumerable<Domain.Entities.Expense>, Exception>.SucceedWith(response);
+
+            var result = new List<SearchExpenseResponse>();
+
+            foreach (var expense in expenses)
+            {
+                result.Add( new SearchExpenseResponse
+                    {
+                        Amount = expense.Amount,
+                        Description = expense.Description,
+                        CreatedAt = expense.CreatedAt,
+                        Category = expense.ExpenseCategory.Name,
+                        Id = expense.Id,
+                        Name = expense.Name,
+                        UserId = expense.UserId
+                    }
+                );
+            }
+
+            return Result<List<SearchExpenseResponse>, Exception>.SucceedWith(result);
         }
         catch (Exception exception)
         {
             _logger.LogError($"SearchExpense failed - {{exceptionMessage}}", exception.Message);
-            return Result<IEnumerable<Domain.Entities.Expense>, Exception>.FailWith(exception);
+            return Result<List<SearchExpenseResponse>, Exception>.FailWith(exception);
         }
     }
 }
