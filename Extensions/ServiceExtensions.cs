@@ -7,6 +7,13 @@ using Peddle.MessageBroker.Serializer;
 using Microsoft.EntityFrameworkCore;
 using NetCoreApp;
 using NetCoreApp.Application.Interfaces.Repositories;
+using NetCoreApp.Application.UseCases.Expense.SearchExpense;
+using NetCoreApp.Application.UseCases.ExpenseCategory.CreateExpense;
+using NetCoreApp.Application.UseCases.ExpenseCategory.DeleteExpenseCategory;
+using NetCoreApp.Application.UseCases.ExpenseCategory.GetAllExpenseCategories;
+using NetCoreApp.Application.UseCases.ExpenseCategory.GetExpenseCategory;
+using NetCoreApp.Application.UseCases.ExpenseCategory.UpdateExpenseCategory;
+using NetCoreApp.Domain.Entities;
 using NetCoreApp.Domain.ErrorResponseProvider;
 using NetCoreApp.Infrastructure.Persistence;
 using NetCoreApp.Infrastructure.Repositories;
@@ -41,6 +48,19 @@ namespace NetCoreApplication.Extensions
             services.AddAutoMapperService();
         }
 
+        public static void AddValidators(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.AddTransient<IRequestHandler<CreateExpenseCategoryCommand, int>, CreateExpenseCategoryHandler>();
+            services.AddTransient<IRequestHandler<UpdateExpenseCategoryCommand>, UpdateExpenseCategoryHandler>();
+            services.AddTransient<IRequestHandler<DeleteExpenseCategoryCommand>, DeleteExpenseCategoryHandler>();
+            services.AddTransient<IRequestHandler<GetExpenseCategoryByIdQuery, ExpenseCategory>, GetExpenseCategoryByIdHandler>();
+            services.AddTransient<IRequestHandler<GetAllExpenseCategoriesQuery, List<ExpenseCategory>>, GetAllExpenseCategoriesHandler>();
+            services.AddTransient<IValidator<CreateExpenseCategoryCommand>, CreateExpenseCategoryCommandValidator>();
+            services.AddTransient<IValidator<UpdateExpenseCategoryCommand>, UpdateExpenseCategoryCommandValidator>();
+            services.AddTransient<IValidator<SearchExpenseQuery>, SearchExpenseValidator>();
+        }
+        
         private static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(IExpenseRepository), typeof(ExpenseRepository));

@@ -44,6 +44,12 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
             "invalid_offer_database_ids",
             "Offer DatabaseIds not found", null,
             System.Net.HttpStatusCode.NotFound);
+        
+        public static readonly ErrorResponsesProvider NotFound = new(
+            null, null, "not_found", HttpStatusCode.NotFound);
+        
+        public static readonly ErrorResponsesProvider InvalidExpenseCategoryName = new(
+            "invalid_first_name", "Expense category name invalid", "invalid_category_name", HttpStatusCode.BadRequest);
 
         public string Message { get; set; }
         public string Code { get; set; }

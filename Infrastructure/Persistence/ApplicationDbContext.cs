@@ -49,7 +49,7 @@ namespace NetCoreApp.Infrastructure.Persistence
             {
                 entity.ToTable("ExpenseCategory");
 
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Id);
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)
                     .IsUnicode(false);
