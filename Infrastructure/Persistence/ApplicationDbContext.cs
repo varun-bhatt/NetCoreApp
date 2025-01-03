@@ -38,6 +38,11 @@ namespace NetCoreApp.Infrastructure.Persistence
                     .HasForeignKey(d => d.StatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Expenses_Status");
+                
+                entity.HasOne(d => d.User).WithMany(p => p.Expenses)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_UserId");
             });
 
             builder.Entity<ExpenseCategory>(entity =>
@@ -60,6 +65,24 @@ namespace NetCoreApp.Infrastructure.Persistence
                 entity.Property(e => e.Name)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+            });
+            
+            builder.Entity<User>(entity =>
+            {
+                entity.HasIndex(e => e.Name, "UK_UserName").IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(1000);
             });
 
             base.OnModelCreating(builder);

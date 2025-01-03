@@ -9,5 +9,6 @@ namespace NetCoreApp.Application.Interfaces.Repositories
         Task<Expense> AddAsync(Expense entity);
         Task UpdateAsync(Expense entity);
         Task DeleteAsync(Expense entity);
+        Task<List<Expense>> SearchExpensesAsync(string searchText);
     }
 }
