@@ -9,6 +9,7 @@ using Peddle.Foundation.Common.Extensions;
 namespace NetCoreApp.Controllers
 {
     [ApiController]
+    [Route("v1/authentication")]
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -18,7 +19,7 @@ namespace NetCoreApp.Controllers
             _userRepository = userRepository;
         }
 
-        [HttpPost("authentication/signup")]
+        [HttpPost("signup")]
         public async Task<IActionResult> Signup([FromBody] User user)
         {
             var existingUser = await _userRepository.GetUserByEmail(user.Email);
@@ -36,7 +37,7 @@ namespace NetCoreApp.Controllers
             return Ok("User created successfully");
         }
 
-        [HttpPost("authentication/login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] User loginUser)
         {
             var user = await _userRepository.GetUserByEmail(loginUser.Email);

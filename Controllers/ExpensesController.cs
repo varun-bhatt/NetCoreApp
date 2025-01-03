@@ -5,6 +5,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
  using NetCoreApp.Application.UseCases.Expense.CreateExpense;
+ using NetCoreApp.Application.UseCases.Expense.DeleteExpense;
  using NetCoreApp.Application.UseCases.Expense.SearchExpense;
 using NetCoreApp.Application.UseCases.ListAllExpenses;
 using NetCoreApp.Domain.Constants;
@@ -18,7 +19,7 @@ using Peddle.Foundation.MediatR;
 namespace NetCoreApp.Controllers;
 
 [ApiController]
-[Route("api/v1")]
+[Route("v1")]
 public class ExpensesController : PeddleApiControllerBase
 {
         private readonly ILogger<ExpensesController> _logger;
@@ -109,5 +110,12 @@ public class ExpensesController : PeddleApiControllerBase
                 Url.Link(CommonConstants.ListAllExpensesRouteName, queriesDictionary)
                     ?.Replace("", ""),
                 page, "GET");
+        }
+        
+        [HttpDelete("expenses/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await CommandAsync(new DeleteExpenseCommand { Id = id });
+            return NoContent();
         }
 }

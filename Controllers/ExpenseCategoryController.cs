@@ -9,7 +9,7 @@ using NetCoreApp.Application.UseCases.ExpenseCategory.UpdateExpenseCategory;
 namespace NetCoreApp.Controllers;
 
 [ApiController]
-[Route("api/category")]
+[Route("v1/category")]
 public class ExpenseCategoryController : ControllerBase
 {
     private readonly IMediator _mediator;

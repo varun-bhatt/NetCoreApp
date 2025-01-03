@@ -7,6 +7,7 @@ using Peddle.MessageBroker.Serializer;
 using Microsoft.EntityFrameworkCore;
 using NetCoreApp;
 using NetCoreApp.Application.Interfaces.Repositories;
+using NetCoreApp.Application.UseCases.Expense.DeleteExpense;
 using NetCoreApp.Application.UseCases.Expense.SearchExpense;
 using NetCoreApp.Application.UseCases.ExpenseCategory.CreateExpense;
 using NetCoreApp.Application.UseCases.ExpenseCategory.DeleteExpenseCategory;
@@ -48,12 +49,13 @@ namespace NetCoreApplication.Extensions
             services.AddAutoMapperService();
         }
 
-        public static void AddValidators(this IServiceCollection services,
+        public static void AddValidatorsAndHandlers(this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddTransient<IRequestHandler<CreateExpenseCategoryCommand, int>, CreateExpenseCategoryHandler>();
             services.AddTransient<IRequestHandler<UpdateExpenseCategoryCommand>, UpdateExpenseCategoryHandler>();
             services.AddTransient<IRequestHandler<DeleteExpenseCategoryCommand>, DeleteExpenseCategoryHandler>();
+            services.AddTransient<IRequestHandler<DeleteExpenseCommand>, DeleteExpenseHandler>();
             services.AddTransient<IRequestHandler<GetExpenseCategoryByIdQuery, ExpenseCategory>, GetExpenseCategoryByIdHandler>();
             services.AddTransient<IRequestHandler<GetAllExpenseCategoriesQuery, List<ExpenseCategory>>, GetAllExpenseCategoriesHandler>();
             services.AddTransient<IValidator<CreateExpenseCategoryCommand>, CreateExpenseCategoryCommandValidator>();
