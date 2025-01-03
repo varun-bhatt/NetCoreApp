@@ -15,7 +15,8 @@ public class ExpensesMappingProfile : Profile
             .ForMember(dest => dest.SortBy, opt => opt.MapFrom(src => src.GetExpensesRequest.SortBy))
             .ForMember(dest => dest.SortOrder, opt => opt.MapFrom(src => src.GetExpensesRequest.SortOrder))
             .ForMember(dest => dest.PageNumber, opt => opt.MapFrom(src => src.GetExpensesRequest.PageNumber))
-            .ForMember(dest => dest.PageSize, opt => opt.MapFrom(src => src.GetExpensesRequest.PageSize));
+            .ForMember(dest => dest.PageSize, opt => opt.MapFrom(src => src.GetExpensesRequest.PageSize))
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.GetExpensesRequest.UserId));
 
         CreateMap<GetExpensesResponseModel, GetExpensesResponseDto>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
