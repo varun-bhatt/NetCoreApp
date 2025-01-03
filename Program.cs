@@ -27,11 +27,6 @@ builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddValidators(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-// Configure Kestrel to listen on a specific address and port
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    serverOptions.Listen(IPAddress.Any, 5000); // Replace with your desired address and port
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

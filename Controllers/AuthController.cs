@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using NetCoreApp.Application.Interfaces.Repositories;
 using NetCoreApp.Domain.Entities;
+using NetCoreApp.Helpers;
 using Peddle.Foundation.Common.Extensions;
 
 namespace NetCoreApp.Controllers
@@ -30,6 +31,7 @@ namespace NetCoreApp.Controllers
                 return BadRequest("email_or_password_invalid");
             }
             user.CreatedAt = DateTime.UtcNow;
+            user.Password = EncryptionHelper.Encrypt(user.Password);
             await _userRepository.AddUser(user);
             return Ok("User created successfully");
         }
@@ -38,7 +40,7 @@ namespace NetCoreApp.Controllers
         public async Task<IActionResult> Login([FromBody] User loginUser)
         {
             var user = await _userRepository.GetUserByEmail(loginUser.Email);
-            if (user == null || user.Password != loginUser.Password)
+            if (user == null || user.Password != EncryptionHelper.Decrypt(loginUser.Password))
             {
                 return Unauthorized("Invalid credentials");
             }
