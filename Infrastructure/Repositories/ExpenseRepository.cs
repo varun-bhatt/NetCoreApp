@@ -5,11 +5,11 @@ using NetCoreApp.Infrastructure.Persistence;
 
 namespace NetCoreApp.Infrastructure.Repositories
 {
-    public class GenericRepositoryAsync : IGenericRepositoryAsync
+    public class ExpenseRepository : IExpenseRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public GenericRepositoryAsync(ApplicationDbContext dbContext)
+        public ExpenseRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }

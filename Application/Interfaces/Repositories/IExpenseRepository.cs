@@ -2,7 +2,7 @@
 
 namespace NetCoreApp.Application.Interfaces.Repositories
 {
-    public interface IGenericRepositoryAsync
+    public interface IExpenseRepository
     {
         Task<Expense> GetByIdAsync(int id);
         Task<IReadOnlyList<Expense>> GetAllAsync();

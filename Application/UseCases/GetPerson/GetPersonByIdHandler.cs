@@ -6,9 +6,9 @@ namespace NetCoreApp.Application.UseCases.GetPerson
 {
     public class GetPersonByIdHandler : IRequestHandler<GetPersonByIdQuery, Expense>
     {
-        private readonly IGenericRepositoryAsync _repository;
+        private readonly IExpenseRepository _repository;
 
-        public GetPersonByIdHandler(IGenericRepositoryAsync repository)
+        public GetPersonByIdHandler(IExpenseRepository repository)
         {
             _repository = repository;
         }
