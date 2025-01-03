@@ -70,7 +70,7 @@ namespace NetCoreApp.Infrastructure.Repositories
                 (from expense in _dbContext.Expenses
                     join category in _dbContext.ExpenseCategories on expense.ExpenseCategoryId equals category.Id
                     join user in _dbContext.Users on expense.UserId equals user.Id
-                    where user.Id == getExpensesFilterModel.UserId
+                    where user.Id == getExpensesFilterModel.UserId && expense.IsDeleted == false
                     select new GetExpensesResponseModel
                     {
                         Name = expense.Name,
