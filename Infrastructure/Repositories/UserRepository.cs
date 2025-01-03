@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCoreApp.Application.Interfaces.Repositories;
 using NetCoreApp.Domain.Entities;
+using NetCoreApp.Infrastructure.Persistence;
 
 namespace NetCoreApp.Infrastructure.Repositories;
 
 // UserRepository implementation
 public class UserRepository : IUserRepository
 {
-    private readonly DbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public UserRepository(DbContext context)
+    public UserRepository(ApplicationDbContext context)
     {
         _context = context;
     }

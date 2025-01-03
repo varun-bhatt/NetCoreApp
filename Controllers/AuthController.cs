@@ -1,4 +1,4 @@
-﻿// AuthenticationController
+﻿// AuthController
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using NetCoreApp.Application.Interfaces.Repositories;
@@ -8,17 +8,16 @@ using Peddle.Foundation.Common.Extensions;
 namespace NetCoreApp.Controllers
 {
     [ApiController]
-    [Route("api/auth")]
-    public class AuthenticationController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
 
-        public AuthenticationController(IUserRepository userRepository)
+        public AuthController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
-        [HttpPost("signup")]
+        [HttpPost("authentication/signup")]
         public async Task<IActionResult> Signup([FromBody] User user)
         {
             var existingUser = await _userRepository.GetUserByEmail(user.Email);
@@ -35,7 +34,7 @@ namespace NetCoreApp.Controllers
             return Ok("User created successfully");
         }
 
-        [HttpPost("login")]
+        [HttpPost("authentication/login")]
         public async Task<IActionResult> Login([FromBody] User loginUser)
         {
             var user = await _userRepository.GetUserByEmail(loginUser.Email);

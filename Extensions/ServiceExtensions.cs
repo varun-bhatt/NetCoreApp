@@ -64,6 +64,7 @@ namespace NetCoreApplication.Extensions
         private static void RegisterRepositories(this IServiceCollection services)
         {
             services.AddScoped(typeof(IExpenseRepository), typeof(ExpenseRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
         }
 
         private static void RegisterInfraStructure(this IServiceCollection services, IConfiguration configuration)
