@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NetCoreApp.Application.Interfaces.Repositories;
+using NetCoreApp.Domain.ErrorResponseProvider;
 using NetCoreApp.Infrastructure.Persistence;
 using Peddle.Foundation.Common.Dtos;
 
@@ -25,11 +26,15 @@ public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseRequestD
         try
         {
             var category = await _context.ExpenseCategories.Where(x => x.Name.ToLower() == request.Category.ToLower()).FirstOrDefaultAsync();
+
+            if (category == null) throw new BusinessException(ErrorResponsesProvider.InvalidExpenseCategoryName.Code);
+            
             var user = await _context.Users.Where(x => x.Id == request.UserId).FirstOrDefaultAsync();
             
+            if(user == null) throw new BusinessException(ErrorResponsesProvider.InvalidUserId.Code);
+
             var expense = new Domain.Entities.Expense
             {
-                //Id = ,
                 Amount = request.Amount,
                 Description = request.Description,
                 Name = request.Name,
@@ -37,8 +42,6 @@ public class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseRequestD
                 CreatedAt = DateTime.UtcNow,
                 ExpenseCategory = category,
                 IsDeleted = false,
-                //UserId = request.UserId,
-                //ExpenseCategoryId = ,
                 LastModifiedAt = DateTime.UtcNow
             };
             

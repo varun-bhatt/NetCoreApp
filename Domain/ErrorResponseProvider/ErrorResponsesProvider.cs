@@ -38,7 +38,10 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
             null, null, "not_found", HttpStatusCode.NotFound);
         
         public static readonly ErrorResponsesProvider InvalidExpenseCategoryName = new(
-            "invalid_first_name", "Expense category name invalid", "invalid_category_name", HttpStatusCode.BadRequest);
+            "invalid_category_name", "Expense category name invalid", "invalid_category_name", HttpStatusCode.BadRequest);
+        
+        public static readonly ErrorResponsesProvider InvalidExpenseName = new(
+            "invalid_expense_name", "Expense name invalid", "invalid_expense_name", HttpStatusCode.BadRequest);
 
         public static readonly ErrorResponsesProvider InvalidStartDate = new("invalid_start_at",
             "Start date time invalid", "invalid_start_at", HttpStatusCode.BadRequest);

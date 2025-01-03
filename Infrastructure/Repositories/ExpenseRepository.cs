@@ -29,7 +29,7 @@ namespace NetCoreApp.Infrastructure.Repositories
                 ).Take(500).ToListAsync();
             }
 
-            var result = await _dbContext.Expenses.Include(x => x.ExpenseCategory).Where(e =>
+            var result = await _dbContext.Expenses.Include(x => x.ExpenseCategory).Where(x => !x.IsDeleted).Where(e =>
                 e.Name.ToLower().Contains(searchText.ToLower()) ||
                 e.Description.ToLower().Contains(searchText.ToLower()) ||
                 e.ExpenseCategory != null && e.ExpenseCategory.Name.ToLower().Contains(searchText.ToLower()) ||
