@@ -22,6 +22,8 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
             HttpStatusCode = httpStatusCode;
             ErrorResponses.Add(this);
         }
+        
+        public static ErrorResponsesProvider InvalidSearchText = new ErrorResponsesProvider("invalid_search_text", "Search Text is invalid", "invalid_search_text", HttpStatusCode.BadRequest);
 
         public static ErrorResponsesProvider InvalidInstantOffer = new ErrorResponsesProvider(
             "instant_offer_not_found",
