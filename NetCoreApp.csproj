@@ -48,6 +48,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Application\UseCases\Expense\" />
       <Folder Include="Domain\" />
       <Folder Include="Domain\Entities1\" />
       <Folder Include="Infrastructure\" />
