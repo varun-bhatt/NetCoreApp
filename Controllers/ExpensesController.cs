@@ -4,7 +4,8 @@ using System.Reflection;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NetCoreApp.Application.UseCases.Expense.SearchExpense;
+ using NetCoreApp.Application.UseCases.Expense.CreateExpense;
+ using NetCoreApp.Application.UseCases.Expense.SearchExpense;
 using NetCoreApp.Application.UseCases.ListAllExpenses;
 using NetCoreApp.Domain.Constants;
 using Newtonsoft.Json;
@@ -17,7 +18,7 @@ using Peddle.Foundation.MediatR;
 namespace NetCoreApp.Controllers;
 
 [ApiController]
-[Route("expenses")]
+[Route("api/v1")]
 public class ExpensesController : PeddleApiControllerBase
 {
         private readonly ILogger<ExpensesController> _logger;
@@ -25,9 +26,17 @@ public class ExpensesController : PeddleApiControllerBase
         public ExpensesController(ILogger<ExpensesController> logger, IMapper mapper, IMediator mediator) : base(mediator, logger)
         {
             _logger = logger;
-        } 
+        }
+        
+        [HttpPost]
+        [Route("expenses")]
+        public async Task<IActionResult> Create([FromBody] CreateExpenseRequestDto createExpenseRequest)
+        {
+            var response = await CommandAsync(createExpenseRequest);
+            return Created();
+        }
 
-        [Route("v1/search")]
+        [Route("expenses/search")]
         [HttpGet]
         public async Task<IActionResult> Search([FromQuery] SearchExpenseQuery query)
         {
@@ -39,7 +48,7 @@ public class ExpensesController : PeddleApiControllerBase
         [ProducesResponseType(404)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
-        [HttpGet]
+        [HttpGet("expenses",Name = CommonConstants.ListAllExpensesRouteName)]
         public async Task<IActionResult> GetAll([FromQuery] GetExpensesRequestDto request)
         {
             var getExpensesQuery = new GetExpensesQuery { GetExpensesRequest = request };
