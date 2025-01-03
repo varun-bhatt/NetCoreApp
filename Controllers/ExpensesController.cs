@@ -12,7 +12,7 @@ public class ExpensesController : PeddleApiControllerBase
 {
     private readonly ILogger<ExpensesController> _logger;
 
-    [Route("/v1/search")]
+    [Route("v1/search")]
     [HttpGet]
     public async Task<IActionResult> Search([FromQuery] SearchExpenseQuery query)
     {
