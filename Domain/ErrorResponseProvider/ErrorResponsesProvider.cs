@@ -25,18 +25,7 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
         
         public static ErrorResponsesProvider InvalidSearchText = new ErrorResponsesProvider("invalid_search_text", "Search Text is invalid", "invalid_search_text", HttpStatusCode.BadRequest);
 
-        public static ErrorResponsesProvider InvalidInstantOffer = new ErrorResponsesProvider(
-            "instant_offer_not_found",
-            "Requested InstantOffer Not Found", null,
-            HttpStatusCode.NotFound);
-
-
-        public  static ErrorResponsesProvider InvalidInstantOfferId = new ErrorResponsesProvider(
-            "invalid_instant_offer_id",
-            "InstantofferId is invalid", null,
-            System.Net.HttpStatusCode.BadRequest);
-
-        public  static ErrorResponsesProvider UnhandledException = new ErrorResponsesProvider(
+        public static ErrorResponsesProvider UnhandledException = new ErrorResponsesProvider(
             "internal_server_error",
             "Something went wrong", null,
             System.Net.HttpStatusCode.InternalServerError);
@@ -51,16 +40,26 @@ namespace NetCoreApp.Domain.ErrorResponseProvider
         public static readonly ErrorResponsesProvider InvalidExpenseCategoryName = new(
             "invalid_first_name", "Expense category name invalid", "invalid_category_name", HttpStatusCode.BadRequest);
 
+        public static readonly ErrorResponsesProvider InvalidStartDate = new("invalid_start_at",
+            "Start date time invalid", "invalid_start_at", HttpStatusCode.BadRequest);
+
+        public static readonly ErrorResponsesProvider InvalidEndDate = new("invalid_end_at", "End date time invalid",
+            "invalid_end_at", HttpStatusCode.BadRequest);
+
+        public static readonly ErrorResponsesProvider InvalidSortOrder = new("invalid_sort_order", "Sort order invalid",
+            "invalid_sort_order", HttpStatusCode.BadRequest);
+
         public string Message { get; set; }
         public string Code { get; set; }
         public string Data { get; set; }
         public HttpStatusCode HttpStatusCode { get; }
 
-        public  ErrorResponsesProvider GetErrorResponse(string errorCode)
+        public ErrorResponsesProvider GetErrorResponse(string errorCode)
         {
             return ErrorResponses.First(er => er.Code.ToLowerInvariant().Equals(errorCode.ToLowerInvariant()));
         }
 
-        
+
     }
+
 }

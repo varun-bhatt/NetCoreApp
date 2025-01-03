@@ -28,6 +28,7 @@
         <PackageReference Include="Peddle.Foundation.CacheManager.Redis" Version="2.0.2" />
         <PackageReference Include="Peddle.Foundation.Common" Version="7.4.0" />
         <PackageReference Include="peddle.foundation.mediatr" Version="5.0.0" />
+        <PackageReference Include="peddle.foundation.validation" Version="9.2.1" />
         <PackageReference Include="Peddle.MessageBroker" Version="1.4.2" />
         <PackageReference Include="Peddle.MessageBroker.RabbitMQ" Version="4.10.5" />
         <PackageReference Include="Peddle.MessageBroker.RabbitMQ.Event" Version="4.34.0" />

@@ -13,8 +13,7 @@ namespace NetCoreApp.Infrastructure.Persistence
         public virtual DbSet<Expense> Expenses { get; set; }
 
         public virtual DbSet<ExpenseCategory> ExpenseCategories { get; set; }
-
-        public virtual DbSet<ExpenseStatus> ExpenseStatuses { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,11 +33,6 @@ namespace NetCoreApp.Infrastructure.Persistence
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Expenses_Category");
 
-                entity.HasOne(d => d.Status).WithMany(p => p.Expenses)
-                    .HasForeignKey(d => d.StatusId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Expenses_Status");
-                
                 entity.HasOne(d => d.User).WithMany(p => p.Expenses)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -55,18 +49,6 @@ namespace NetCoreApp.Infrastructure.Persistence
                     .IsUnicode(false);
             });
 
-            builder.Entity<ExpenseStatus>(entity =>
-            {
-                entity.ToTable("ExpenseStatus");
-
-                entity.HasIndex(e => e.Name, "UK_Status").IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-                entity.Property(e => e.Name)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-            });
-            
             builder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Name, "UK_UserName").IsUnique();
