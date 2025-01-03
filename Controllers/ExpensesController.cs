@@ -1,5 +1,5 @@
 
-﻿using System.Dynamic;
+using System.Dynamic;
 using System.Reflection;
 using AutoMapper;
 using MediatR;
