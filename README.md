@@ -39,7 +39,7 @@ BudgetBuddy makes it simple to stay on top of your budget and manage your money 
 - Clone the repository - https://github.com/varun-bhatt/NetCoreApp.git
 - Open it in Visual studio code/Rider and run the application
 **Frontend**
-- Clone the repository - https://github.com/your-repo/ai-code-challenge.git
+- Clone the repository - [https://github.com/your-repo/ai-code-challenge.git](https://github.com/MTShubham/ai-code-challenge)
 - Open it in Visual studio code
 - To Install dependencies execute
   ```
