@@ -53,6 +53,49 @@ BudgetBuddy makes it simple to stay on top of your budget and manage your money 
    ```
    http://localhost:3000
    ```
+- Install Docker desktop and download `mcr.microsoft.com/mssql/server:2022-latest` image
+- Run container in docker consisting SQL server image
+- Execute the following SQL script in the SQL server
+```
+CREATE TABLE ExpenseCategory (
+    Id INT IDENTITY(1,1), -- Primary Key
+    Name VARCHAR(20) NOT NULL,
+	IsDeleted bit NOT NULL, 
+    CreatedAt DATETIME2 NOT NULL,
+    LastModifiedAt DATETIME2 NULL,
+	CONSTRAINT PK_ExpenseCategory PRIMARY KEY CLUSTERED (Id),
+
+);
+
+CREATE TABLE Expenses (
+    Id BIGINT IDENTITY(1,1), -- Primary Key
+    Name VARCHAR(20) NOT NULL,
+    Description VARCHAR(250) NULL,
+    Amount DECIMAL(18, 2), -- Check constraint
+    ExpenseCategoryId INT NOT NULL, -- Foreign Key to ExpenseCategory
+	UserId BigInt NOT NULL,
+	IsDeleted bit NOT NULL,
+    CreatedAt DATETIME2 NOT NULL,
+    LastModifiedAt DATETIME2 NULL,
+	CONSTRAINT PK_Expenses PRIMARY KEY CLUSTERED (Id),
+    CONSTRAINT FK_Expenses_CategoryId FOREIGN KEY (ExpenseCategoryId) REFERENCES ExpenseCategory(Id),
+	CONSTRAINT FK_UserId FOREIGN KEY (UserId) REFERENCES Users(Id),
+);
+
+ALTER TABLE ExpenseCategory
+ADD CONSTRAINT UK_Name UNIQUE (Name);
+
+CREATE TABLE Users (
+    Id BigInt IDENTITY(1,1),
+    Name VARCHAR(250) NOT NULL,
+	Email Varchar(250) NOT NULL,
+    Password NVARCHAR(1000) NOT NULL,
+	CreatedAt DATETIME2 NOT NULL,
+	CONSTRAINT PK_Users PRIMARY KEY CLUSTERED (Id),
+	CONSTRAINT UK_Email UNIQUE (Email)
+);
+```
+   
 ## Usage
 - The application features a login screen where users can enter their email and password.
 - Upon successful authentication, users will be welcomed on the main page.
