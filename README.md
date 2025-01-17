@@ -59,4 +59,5 @@ BudgetBuddy makes it simple to stay on top of your budget and manage your money 
 - Start adding expenses under categories and viewing reports.
 
 ## Database Schema Design
-![Database-design](https://github.com/user-attachments/assets/2c014976-df30-403c-860f-93426761f52f)
+![Database-design](https://github.com/user-attachments/assets/07fc9f4e-ac8a-415c-9c44-589806cc093a)
+
